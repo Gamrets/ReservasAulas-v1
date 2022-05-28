@@ -1,9 +1,12 @@
 package org.iesalandalus.programacion.reservasaulas.mvc.vista;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import javax.naming.OperationNotSupportedException;
 import org.iesalandalus.programacion.reservasaulas.mvc.controlador.*;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.*;
+import java.util.Iterator;
 
 public class Vista {
 
@@ -105,12 +108,12 @@ public class Vista {
 
 		Consola.mostrarCabecera("Listado de aulas");
 
-		String[] aulas = controlador.representarAulas();
+		List <String> aulas = controlador.representarAulas();
 
-		if (aulas.length > 0) {
+		if (aulas.size() > 0) {
 
-			for (String aula : aulas) {
-
+			for (Iterator<String> it = aulas.iterator(); it.hasNext();) {
+				String aula = it.next();
 				System.out.println(aula);
 			}
 
@@ -180,11 +183,12 @@ public class Vista {
 
 		Consola.mostrarCabecera("Listado de profesores");
 
-		String[] profesores = controlador.representarProfesores();
+		List <String> profesores = controlador.representarProfesores();
 
-		if (profesores.length > 0) {
+		if (profesores.size() > 0) {
 
-			for (String profesor : profesores) {
+			for (Iterator<String> it = profesores.iterator(); it.hasNext();) {
+				String profesor = it.next();
 				System.out.println(profesor);
 			}
 		} else {
@@ -214,8 +218,8 @@ public class Vista {
 
 		String nombreAula;
 		String nombreProfesor;
-		String[] profesores = controlador.representarProfesores();
-		String[] aulas = controlador.representarAulas();
+		List <String> profesores = controlador.representarProfesores();
+		List <String> aulas = controlador.representarAulas();
 		String correoProfesorLimpio = new String();
 
 		Reserva reserva = null;
@@ -228,7 +232,7 @@ public class Vista {
 			nombreProfesor = Consola.leerNombreProfesor();
 			nombreAula = Consola.leerNombreAula();
 
-			for (int i = 0; i < profesores.length; i++) {
+			for (Iterator<String> it = profesores.iterator(); it.hasNext();) {		
 
 				if (nombreProfesor.equals(profesor.getNombre())) {
 
@@ -237,9 +241,12 @@ public class Vista {
 				}
 			}
 
-			for (int j = 0; j < aulas.length; j++) {
+			for (Iterator<String> it = aulas.iterator(); it.hasNext();) {
+				
+				String nombresAulas = it.next();
 
-				if (aulas[j].equals(nombreAula)) {
+				if (nombresAulas.toString().replace("nombre Aula=", "").equals(nombreAula)) {
+					
 
 					aula = new Aula(nombreAula);
 					aulaRegistrada = true;
@@ -290,12 +297,13 @@ public class Vista {
 
 		Consola.mostrarCabecera("Listado de reservas");
 
-		String[] reservas = controlador.representarReservas();
+		List <String> reservas = controlador.representarReservas();
 
-		if (reservas.length > 0) {
+		if (reservas.size() > 0) {
 
-			for (String reserva : reservas) {
-
+			for (Iterator<String> it = reservas.iterator(); it.hasNext();) {
+				
+				String reserva = it.next();
 				System.out.println(reserva);
 			}
 
@@ -309,9 +317,10 @@ public class Vista {
 
 		Consola.mostrarCabecera("Listado de reservas de aulas");
 
-		Reserva[] reservas = controlador.getReservasAula(Consola.leerAula());
+		List <Reserva> reservas = controlador.getReservasAula(Consola.leerAula());
 
-		for (Reserva reserva : reservas) {
+		for (Iterator<Reserva> it = reservas.iterator(); it.hasNext();) {
+			Reserva reserva = it.next();
 
 			if (reserva != null)
 
@@ -324,9 +333,10 @@ public class Vista {
 
 		Consola.mostrarCabecera("Listado de reservas de profesores");
 
-		Reserva[] reservas = controlador.getReservasProfesor(Consola.leerProfesor());
+		List <Reserva> reservas = controlador.getReservasProfesor(Consola.leerProfesor());
 
-		for (Reserva reserva : reservas) {
+		for (Iterator<Reserva> it = reservas.iterator(); it.hasNext();) {
+			Reserva reserva = it.next();
 
 			if (reserva != null)
 
@@ -340,9 +350,11 @@ public class Vista {
 		Consola.mostrarCabecera("Listado de reservas permanencia");
 
 		Permanencia permanencia = new Permanencia(Consola.leerDia(), Consola.leerTramo());
-		Reserva[] reservas = controlador.getReservasPermanencia(permanencia);
+		List <Reserva> reservas = controlador.getReservasPermanencia(permanencia);
 
-		for (Reserva reserva : reservas) {
+		for (Iterator<Reserva> it = reservas.iterator(); it.hasNext();) {
+			
+			Reserva reserva = it.next();
 
 			if (reserva != null)
 
@@ -355,7 +367,9 @@ public class Vista {
 
 		Consola.mostrarCabecera("Consultar Disponibilidad");
 		String nombreAula;
-		String[] aulas = controlador.representarAulas();
+		String nombresAulas;
+	   List	<String> aulas = controlador.representarAulas();
+	   
 		LocalDate dia;
 		Tramo tramo;
 
@@ -365,9 +379,10 @@ public class Vista {
 
 			nombreAula = Consola.leerNombreAula();
 
-			for (int i = 0; i < aulas.length; i++) {
+			for (Iterator<String> it = aulas.iterator(); it.hasNext();) {
 
-				if (aulas[i].equals(nombreAula)) {
+				nombresAulas = it.next();
+				if (nombresAulas.toString().equals(nombreAula)) {
 
 					aulaRegistrada = true;
 
