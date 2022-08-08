@@ -94,7 +94,7 @@ public class Controlador {
 
 	public List <Reserva> getReservasAula(Aula aula) {
 		
-		return modelo.getReservasAulas(aula);
+		return modelo.getReservasAula(aula);
 	}
 
 	public List <Reserva> getReservasProfesor(Profesor profesor) {
